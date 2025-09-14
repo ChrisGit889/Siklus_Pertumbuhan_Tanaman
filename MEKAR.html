@@ -1,62 +1,319 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Identifikasi Pertumbuhan Tanaman</title>
-  <script src="MEKAR.JS"></script>  
-  <link rel="stylesheet" href="MEKAR.CSS">
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MEKAR — Kalkulator Waktu Pertumbuhan Tanaman</title>
+  <link rel="stylesheet" href="Mekar.css" />
 </head>
-<body>
-  <div class="container">
-    <h1>🌱 Identifikasi Pertumbuhan Tanaman</h1>
-    <p>Masukkan data tanaman untuk mendapatkan rekomendasi posisi dan jadwal penyiraman.</p>
+<body data-theme="light">
+  <div class="navbar">
+    <div class="brand">
+      <img src="Logo/Logo_Mekar.png" alt="Logo Mekar" class="logo-img">
+      <div>
+        <div class="brand-title">MEKAR</div>
+        <div class="brand-subtitle">Aplikasi perencanaan pertumbuhan tanaman</div>
+      </div>
+    </div>    
 
-    <label for="plant">Jenis Tanaman:</label>
-    <select id="plant">
-      <option value="monstera">Monstera</option>
-      <option value="succulent">Succulent</option>
-      <option value="basil">Basil</option>
-    </select>
+    <div class="nav-links" role="navigation">
+      <button id="nav-beranda" class="active" onclick="show('beranda')">Beranda</button>
+      <button id="nav-kalkulator" onclick="show('kalkulator')">Planting</button>
+      <button id="nav-detail" onclick="show('detail')">Detail</button>
+    </div>
 
-    <label for="phase">Fase Pertumbuhan:</label>
-    <select id="phase">
-      <option value="seedling">Seedling</option>
-      <option value="vegetative">Vegetatif</option>
-      <option value="flowering">Berbunga</option>
-    </select>
-
-    <label for="orientation">Orientasi Jendela:</label>
-    <select id="orientation">
-      <option value="South">Selatan</option>
-      <option value="East">Timur</option>
-      <option value="West">Barat</option>
-      <option value="North">Utara</option>
-    </select>
-
-    <label for="distance">Jarak dari Jendela (meter):</label>
-    <input type="number" id="distance" value="1">
-
-    <label for="obstruction">Halangan Cahaya:</label>
-    <select id="obstruction">
-      <option value="none">Tidak ada</option>
-      <option value="sheer">Kaca Tipis</option>
-      <option value="wall">Tembok/halangan</option>
-    </select>
-
-    <label for="pot">Diameter Pot (cm):</label>
-    <input type="number" id="pot" value="15">
-
-    <label for="temp">Suhu Ruangan (°C):</label>
-    <input type="number" id="temp" value="28">
-
-    <button onclick="hitungRekomendasi()">Hitung Rekomendasi</button>
-
-    <div class="result" id="result"></div>
-
-    <h2>📅 Kalender Penyiraman (30 Hari)</h2>
-    <div class="calendar" id="calendar"></div>
+    <div class="flex-center">
+      <div class="theme-toggle">
+        <div class="small-muted">Light</div>
+        <div id="themeSwitch" class="switch" onclick="toggleTheme()"><div class="knob"></div></div>
+        <div class="small-muted">Dark</div>
+      </div>
+    </div>
   </div>
 
+  <main class="container">
+    <section id="beranda" class="card">
+      <h1>Selamat datang di MEKAR 🌿</h1>
+      <p class="lead">MEKAR adalah aplikasi sederhana untuk membantu Anda merencanakan perawatan dan memperkirakan tahapan pertumbuhan tanaman. Pilih tanaman, masukkan kondisi (cahaya, suhu, media, pot), lalu buka Kalkulator untuk mendapatkan rekomendasi penyiraman, pemupukan, dan kalender pertumbuhan.</p>
+
+      <h2>Apa yang bisa dilakukan MEKAR?</h2>
+      <ul>
+        <li>Memberi rekomendasi interval penyiraman dan pemupukan berdasarkan jenis tanaman dan kondisi lingkungan.</li>
+        <li>Memperkirakan tanggal/tahapan penting: kecambah, menanam, remaja, dewasa.</li>
+        <li>Membuat kalender interaktif - tandai saat disiram atau tugas telah selesai.</li>
+        <li>Mode terang/gelap untuk kenyamanan penggunaan.</li>
+      </ul>
+
+      <h2>Tanaman yang didukung</h2>
+      <div class="flex-wrap-gap">
+        <div class="card plant-card">Bunga Matahari </div>
+        <div class="card plant-card">Bunga Mawar</div>
+        <div class="card plant-card">Bunga Petunia</div>
+        <div class="card plant-card">Strawberry</div>
+        <div class="card plant-card">Tomat</div>
+      </div>
+    </section>
+
+    <section id="kalkulator" class="card" style="display:none">
+      <h2>Kalkulator Perawatan & Perkiraan Waktu Pertumbuhan</h2>
+      <div class="grid-2">
+        <div>
+          <label for="plant">Pilih Tanaman</label>
+          <select id="plant">
+            <option value="sunflower">Bunga Matahari</option>
+            <option value="rose">Mawar</option>
+            <option value="petunia">Petunia</option>
+            <option value="strawberry">Strawberry</option>
+            <option value="tomato">Tomat</option>
+          </select>
+
+          <label for="phase">Tahap Saat Ini</label>
+          <select id="phase">
+            <option value="seed">Benih</option>
+            <option value="seedling">Kecambah</option>
+            <option value="vegetative">Remaja/Veg</option>
+            <option value="flowering">Berbunga</option>
+          </select>
+
+          <label for="orientation">Arah Jendela / Sumber Cahaya</label>
+          <select id="orientation">
+            <option value="south">Selatan (paling terang)</option>
+            <option value="east">Timur</option>
+            <option value="west">Barat</option>
+            <option value="north">Utara (paling redup)</option>
+          </select>
+
+          <label for="distance">Jarak dari Jendela (meter)</label>
+          <input id="distance" type="number" min="0" step="0.1" value="1">
+
+          <label for="obstruction">Halangan Cahaya</label>
+          <select id="obstruction">
+            <option value="none">Tidak ada</option>
+            <option value="sheer">Kaca tipis / tirai tipis</option>
+            <option value="block">Halangan / tembok</option>
+          </select>
+
+          <label for="pot">Diameter Pot (cm)</label>
+          <input id="pot" type="number" min="5" value="15">
+
+          <label for="temp">Suhu Ruangan (°C)</label>
+          <input id="temp" type="number" min="5" max="40" value="25">
+
+          <label for="media">Media Tanam (opsional)</label>
+          <select id="media">
+            <option value="mix">Campuran (kompos + tanah + pasir)</option>
+            <option value="peat">Tanah gambut / potting mix</option>
+            <option value="sandy">Tanah berpasir</option>
+            <option value="clay">Tanah liat</option>
+          </select>
+
+          <div class="flex-gap">
+            <button class="btn" onclick="hitungRekomendasi()">Hitung & Tampilkan Rekomendasi</button>
+            <button class="btn ghost" onclick="resetAll()">Reset</button>
+          </div>
+        </div>
+
+        <div>
+          <div id="resultCard" class="result">
+            <h3>Hasil Rekomendasi</h3>
+            <div id="kpis" class="kpi"></div>
+            <div id="advice" class="advice-text"></div>
+
+            <div id="timeline" class="timeline-wrapper">
+              <h4>Perkiraan Tahapan Pertumbuhan</h4>
+              <div id="stages" class="timeline"></div>
+            </div>
+
+            <div id="calendarWrapper" class="calendar-wrapper">
+              <h4>Kalender Interaktif</h4>
+              <div id="calendar" class="calendar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="detail" class="card" style="display:none">
+      <div class="detail-header">
+        <button class="detail-tab active" onclick="showDetailContent('sunflower')">🌻 Bunga Matahari</button>
+        <button class="detail-tab" onclick="showDetailContent('rose')">🌹 Mawar</button>
+        <button class="detail-tab" onclick="showDetailContent('petunia')">🌸 Petunia</button>
+        <button class="detail-tab" onclick="showDetailContent('strawberry')">🍓 Strawberry</button>
+        <button class="detail-tab" onclick="showDetailContent('tomato')">🍅 Tomat</button>
+      </div>
+  
+      <div id="detail-content" class="detail-content">
+        <div id="detail-sunflower" class="detail-section active">
+            <h2>🌻 Bunga Matahari</h2>
+            <p>Bunga matahari adalah tanaman yang mudah tumbuh dan sangat menyukai sinar matahari penuh. Ideal untuk pemula. Membutuhkan banyak air, terutama di hari yang panas.</p>
+    
+            <h3>Waktu Tumbuh</h3>
+            <p>Bunga Matahari diperkirakan akan tumbuh selama <b>80 hari</b> hingga mencapai fase dewasa.</p>
+    
+            <h3>Gambar Pertumbuhan</h3>
+            <p>Berikut ini adalah gambar pertumbuhannya:</p>
+            <div class="growth-flow">
+              <span>Benih</span><span class="arrow">→</span>
+              <span>Kecambah</span><span class="arrow">→</span>
+              <span>Remaja</span><span class="arrow">→</span>
+              <span>Dewasa</span>
+            </div>
+            <div class="growth-stage-images">
+              <div class="growth-stage">
+                <img src="Bunga_Matahari/Benih_Bunga_Matahari.jpg" alt="Benih Bunga Matahari" class="growth-img">
+                <div class="stage-label">Benih</div>
+              </div>
+              <div class="growth-stage">
+                <img src="Bunga_Matahari/Kecambah_Bunga_Matahari.jpg" alt="Kecambah Bunga Matahari" class="growth-img">
+                <div class="stage-label">Kecambah</div>
+              </div>
+              <div class="growth-stage">
+                <img src="Bunga_Matahari/Bunga_Matahari_Remaja.jpeg" alt="Remaja Bunga Matahari" class="growth-img">
+                <div class="stage-label">Remaja</div>
+              </div>
+              <div class="growth-stage">
+                <img src="Bunga_Matahari/Bunga_Matahari_Dewasa.jpg" alt="Dewasa Bunga Matahari" class="growth-img">
+                <div class="stage-label">Dewasa</div>
+              </div>
+            </div>
+          </div>
+          
+          <div id="detail-rose" class="detail-section">
+            <h2>🌹 Mawar</h2>
+            <p>Mawar adalah tanaman yang indah dan klasik, tetapi membutuhkan perhatian lebih. Suka sinar matahari, drainase baik, dan pemupukan teratur.</p>
+            <h3>Waktu Tumbuh</h3>
+            <p>Mawar diperkirakan akan tumbuh selama <b>150 hari</b> hingga mencapai fase dewasa.</p>
+            <h3>Gambar Pertumbuhan</h3>
+            <p>Berikut ini adalah gambar pertumbuhannya:</p>
+            <div class="growth-flow">
+              <span>Benih</span><span class="arrow">→</span>
+              <span>Kecambah</span><span class="arrow">→</span>
+              <span>Remaja</span><span class="arrow">→</span>
+              <span>Dewasa</span>
+            </div>
+            <div class="growth-stage-images">
+              <div class="growth-stage">
+                <img src="Bunga_Mawar/Benih_Bunga_Mawar.jpg" alt="Benih Mawar" class="growth-img">
+                <div class="stage-label">Benih</div>
+              </div>
+              <div class="growth-stage">
+                <img src="Bunga_Mawar/Kecambah_Bunga_Mawar.jpg" alt="Kecambah Mawar" class="growth-img">
+                <div class="stage-label">Kecambah</div>
+              </div>
+              <div class="growth-stage">
+                <img src="Bunga_Mawar/Bunga_Mawar_Remaja.jpg" alt="Remaja Mawar" class="growth-img">
+                <div class="stage-label">Remaja</div>
+              </div>
+              <div class="growth-stage">
+                <img src="Bunga_Mawar/Bunga_Mawar_Dewasa.jpg" alt="Dewasa Mawar" class="growth-img">
+                <div class="stage-label">Dewasa</div>
+              </div>
+            </div>
+          </div>
+          
+        <div id="detail-petunia" class="detail-section">
+          <h2>🌸 Petunia</h2>
+            <p>Petunia adalah tanaman bunga populer yang berbunga lebat sepanjang musim. Suka sinar matahari penuh dan tanah yang lembab tapi tidak tergenang.</p>
+            <h3>Waktu Tumbuh</h3>
+            <p>Petunia diperkirakan akan tumbuh selama <b>70 hari</b> hingga mencapai fase dewasa.</p>
+            <h3>Gambar Pertumbuhan</h3>
+            <p>Berikut ini adalah gambar pertumbuhannya:</p>
+            <div class="growth-flow">
+              <span>Benih</span><span class="arrow">→</span>
+              <span>Kecambah</span><span class="arrow">→</span>
+              <span>Remaja</span><span class="arrow">→</span>
+              <span>Dewasa</span>
+            </div>
+            <div class="growth-stage-images">
+              <div class="growth-stage">
+                <img src="Bunga_Petunia/Benih_Bunga_Petunia.jpeg" alt="Benih Petunia" class="growth-img">
+                <div class="stage-label">Benih</div>
+              </div>
+              <div class="growth-stage">
+                <img src="Bunga_Petunia/Kecambah_Bunga_Petunia.jpg" alt="Kecambah Petunia" class="growth-img">
+                <div class="stage-label">Kecambah</div>
+              </div>
+              <div class="growth-stage">
+                <img src="Bunga_Petunia/Bunga_Petunia_Remaja.jpg" alt="Remaja Petunia" class="growth-img">
+                <div class="stage-label">Remaja</div>
+              </div>
+              <div class="growth-stage">
+                <img src="Bunga_Petunia/Bunga_Petunia_Dewasa.jpg" alt="Dewasa Petunia" class="growth-img">
+                <div class="stage-label">Dewasa</div>
+              </div>
+            </div>
+          </div>
+          
+          <div id="detail-strawberry" class="detail-section">
+            <h2>🍓 Strawberry</h2>
+            <p>Strawberry adalah buah beri yang manis dan mudah ditanam di pot. Membutuhkan sinar matahari penuh dan penyiraman teratur.</p>
+            <h3>Waktu Tumbuh</h3>
+            <p>Strawberry diperkirakan akan tumbuh selama <b>120 hari</b> hingga mencapai fase dewasa.</p>
+            <h3>Gambar Pertumbuhan</h3>
+            <p>Berikut ini adalah gambar pertumbuhannya:</p>
+            <div class="growth-flow">
+              <span>Benih</span><span class="arrow">→</span>
+              <span>Kecambah</span><span class="arrow">→</span>
+              <span>Remaja</span><span class="arrow">→</span>
+              <span>Dewasa</span>
+            </div>
+            <div class="growth-stage-images">
+              <div class="growth-stage">
+                <img src="Strawberry/Benih_Strawbery.jpg" alt="Benih Strawberry" class="growth-img">
+                <div class="stage-label">Benih</div>
+              </div>
+              <div class="growth-stage">
+                <img src="Strawberry/Kecambah_Strawbery.jpeg" alt="Kecambah Strawberry" class="growth-img">
+                <div class="stage-label">Kecambah</div>
+              </div>
+              <div class="growth-stage">
+                <img src="Strawberry/Strawbery_Remaja.jpeg" alt="Remaja Strawberry" class="growth-img">
+                <div class="stage-label">Remaja</div>
+              </div>
+              <div class="growth-stage">
+                <img src="Strawberry/Strawberry_Dewasa.jpg" alt="Dewasa Strawberry" class="growth-img">
+                <div class="stage-label">Dewasa</div>
+              </div>
+            </div>
+          </div>
+          
+          <div id="detail-tomato" class="detail-section">
+            <h2>🍅 Tomat</h2>
+            <p>Tomat adalah tanaman sayur yang sangat produktif jika dirawat dengan benar. Suka sinar matahari penuh dan media yang kaya nutrisi.</p>
+            <h3>Waktu Tumbuh</h3>
+            <p>Tomat diperkirakan akan tumbuh selama <b>100 hari</b> hingga mencapai fase dewasa.</p>
+            <h3>Gambar Pertumbuhan</h3>
+            <p>Berikut ini adalah gambar pertumbuhannya:</p>
+            <div class="growth-flow">
+              <span>Benih</span><span class="arrow">→</span>
+              <span>Kecambah</span><span class="arrow">→</span>
+              <span>Remaja</span><span class="arrow">→</span>
+              <span>Dewasa</span>
+            </div>
+            <div class="growth-stage-images">
+                <div class="growth-stage">
+                    <img src="Tomat/Benih_Tomat.jpg" alt="Benih Tomat" class="growth-img">
+                    <div class="stage-label">Benih</div>
+                </div>
+                <div class="growth-stage">
+                    <img src="Tomat/Kecambah_Tomat.jpg" alt="Kecambah Tomat" class="growth-img">
+                    <div class="stage-label">Kecambah</div>
+                </div>
+                <div class="growth-stage">
+                    <img src="Tomat/Tomat_Remaja.jpeg" alt="Remaja Tomat" class="growth-img">
+                    <div class="stage-label">Remaja</div>
+                </div>
+                <div class="growth-stage">
+                    <img src="Tomat/Tomat_Dewasa.jpeg" alt="Dewasa Tomat" class="growth-img">
+                    <div class="stage-label">Dewasa</div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>    
+
+    <footer>Kelompok 18</footer>
+  </main>
+  <script src="Mekar.js"></script>
 </body>
 </html>
