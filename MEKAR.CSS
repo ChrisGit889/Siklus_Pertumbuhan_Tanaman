@@ -16,10 +16,6 @@
   --accent-2: #4fb964;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 body {
   font-family: Inter, system-ui, Arial, Helvetica, sans-serif;
   background: var(--bg);
@@ -175,7 +171,8 @@ body {
   }
 }
 
-h1, h2 {
+h1,
+h2 {
   margin: 6px 0;
 }
 
@@ -247,7 +244,7 @@ textarea {
 .kpi .item {
   padding: 10px 12px;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(85, 255, 0, 0.05);
   min-width: 140px;
 }
 
@@ -280,7 +277,7 @@ textarea {
 .calendar {
   margin-top: 14px;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 8px;
 }
 
@@ -291,6 +288,7 @@ textarea {
   text-align: center;
   cursor: pointer;
   min-height: 58px;
+  transition: background-color 0.2s ease;
 }
 
 .day.water {
@@ -306,6 +304,8 @@ textarea {
 .day.done {
   opacity: 0.6;
   text-decoration: line-through;
+  background-color: var(--accent);
+  color: white;
 }
 
 .detail-content {
@@ -354,9 +354,11 @@ textarea {
 
 .growth-flow .arrow {
   color: var(--muted);
+  font-size: 18px;
 }
 
 .growth-stage-images {
+  margin-top: 12px;
   display: flex;
   gap: 12px;
   flex-wrap: wrap;

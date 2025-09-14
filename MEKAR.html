@@ -18,7 +18,7 @@
 
     <div class="nav-links" role="navigation">
       <button id="nav-beranda" class="active" onclick="show('beranda')">Beranda</button>
-      <button id="nav-kalkulator" onclick="show('kalkulator')">Planting</button>
+      <button id="nav-kalkulator" onclick="show('kalkulator')">Menanam</button>
       <button id="nav-detail" onclick="show('detail')">Detail</button>
     </div>
 
@@ -38,9 +38,9 @@
 
       <h2>Apa yang bisa dilakukan MEKAR?</h2>
       <ul>
-        <li>Memberi rekomendasi interval penyiraman dan pemupukan berdasarkan jenis tanaman dan kondisi lingkungan.</li>
-        <li>Memperkirakan tanggal/tahapan penting: kecambah, menanam, remaja, dewasa.</li>
-        <li>Membuat kalender interaktif - tandai saat disiram atau tugas telah selesai.</li>
+        <li>Memberi rekomendasi penyiraman dan pemupukan berdasarkan jenis tanaman dan kondisi lingkungan.</li>
+        <li>Memperkirakan tanggal/tahapan penting dalam kehidupan tanaman seperti menanam, menyiram, remaja, dan dewasa.</li>
+        <li>Membuat kalender interaktif - menandai bahwa tanaman sudah disiram</li>
         <li>Mode terang/gelap untuk kenyamanan penggunaan.</li>
       </ul>
 
@@ -71,8 +71,8 @@
           <select id="phase">
             <option value="seed">Benih</option>
             <option value="seedling">Kecambah</option>
-            <option value="vegetative">Remaja/Veg</option>
-            <option value="flowering">Berbunga</option>
+            <option value="vegetative">Remaja</option>
+            <option value="flowering">Berbunga (Dewasa)</option>
           </select>
 
           <label for="orientation">Arah Jendela / Sumber Cahaya</label>
@@ -94,10 +94,10 @@
           </select>
 
           <label for="pot">Diameter Pot (cm)</label>
-          <input id="pot" type="number" min="5" value="15">
+          <input id="pot" type="number" placeholder="Contohnya 15">
 
           <label for="temp">Suhu Ruangan (°C)</label>
-          <input id="temp" type="number" min="5" max="40" value="25">
+          <input id="temp" type="number" placeholder="Contohnya 25">
 
           <label for="media">Media Tanam (opsional)</label>
           <select id="media">
@@ -145,8 +145,7 @@
       <div id="detail-content" class="detail-content">
         <div id="detail-sunflower" class="detail-section active">
             <h2>🌻 Bunga Matahari</h2>
-            <p>Bunga matahari adalah tanaman yang mudah tumbuh dan sangat menyukai sinar matahari penuh. Ideal untuk pemula. Membutuhkan banyak air, terutama di hari yang panas.</p>
-    
+            <p>Bunga matahari adalah bunga musim panas. Mereka biasanya mulai mekar di pertengahan musim panas dan dapat bertahan hingga awal musim gugur. Bunganya, yang membentang sekitar 7,6-15 cm rata-rata, memiliki cakram tengah yang lebar dikelilingi oleh kelopak pendek. Tanaman ini memiliki kelopak oranye-kuning dengan cakram cokelat atau ungu, tetapi petani sekarang telah menghasilkan bunga dalam beberapa warna lain. Bunga matahari tumbuh di batang yang berbulu, kokoh, tegak yang tingginya bisa mencapai 0,9-1,2 m. Batangnya dapat menampung satu bunga atau bercabang dengan banyak bunga. Daun kasar, berbulu, lonjong hingga segitiga tumbuh di sepanjang batang. Di musim gugur, cakram itu memberi jalan bagi biji bunga matahari, yang merupakan daya tarik utama bagi burung dan satwa liar lainnya.</p>
             <h3>Waktu Tumbuh</h3>
             <p>Bunga Matahari diperkirakan akan tumbuh selama <b>80 hari</b> hingga mencapai fase dewasa.</p>
     
@@ -180,11 +179,11 @@
           
           <div id="detail-rose" class="detail-section">
             <h2>🌹 Mawar</h2>
-            <p>Mawar adalah tanaman yang indah dan klasik, tetapi membutuhkan perhatian lebih. Suka sinar matahari, drainase baik, dan pemupukan teratur.</p>
+            <p>Mawar merah termasuk dalam kategori "landscape rose", sebuah istilah yang hampir identik dengan perawatan rendah. Semak mawar ini mekar sepanjang musim panas hingga musim gugur tanpa membutuhkan banyak perawatan dari Anda. Pemangkasan bunga layu (deadheading) tidak diperlukan untuk membuatnya mekar kembali. Bunga-bunga lama akan gugur dan menghilang dengan sendirinya, sehingga tanaman tetap terlihat menarik secara alami.</p>
             <h3>Waktu Tumbuh</h3>
-            <p>Mawar diperkirakan akan tumbuh selama <b>150 hari</b> hingga mencapai fase dewasa.</p>
+            <p>Mawar diperkirakan akan tumbuh selama <b>120 hari</b> hingga mencapai fase dewasa.</p>
             <h3>Gambar Pertumbuhan</h3>
-            <p>Berikut ini adalah gambar pertumbuhannya:</p>
+            <p>Berikut ini adalah gambar pertumbuhannya:</p> 
             <div class="growth-flow">
               <span>Benih</span><span class="arrow">→</span>
               <span>Kecambah</span><span class="arrow">→</span>
@@ -213,7 +212,8 @@
           
         <div id="detail-petunia" class="detail-section">
           <h2>🌸 Petunia</h2>
-            <p>Petunia adalah tanaman bunga populer yang berbunga lebat sepanjang musim. Suka sinar matahari penuh dan tanah yang lembab tapi tidak tergenang.</p>
+            <p>Petunia adalah salah satu bunga taman yang paling populer untuk ditanam di perbatasan taman maupun dalam wadah. Mereka dikenal sebagai tanaman yang berbunga lebat, dan Anda bisa menemukannya dalam hampir semua warna, kecuali biru. Petunia memiliki bunga berbentuk terompet yang lebar serta daun bercabang yang berbulu dan agak lengket.</p>
+            <p> dalam genus petunia, terdapat banyak variasi: bunga tunggal dan ganda; kelopak bergelombang dan halus; warna bergaris, berpola urat, dan warna solid; bentuk pertumbuhan yang menggumpal atau menjuntai; bahkan beberapa memiliki aroma harum. Sebagian besar petunia yang dijual saat ini adalah hasil persilangan (hibrida), yang dikembangkan untuk tujuan desain tertentu. Mereka tumbuh dengan mudah dan cepat ketika dipindahkan ke taman, yang sebaiknya dilakukan pada musim semi setelah ancaman embun beku berlalu.</p>
             <h3>Waktu Tumbuh</h3>
             <p>Petunia diperkirakan akan tumbuh selama <b>70 hari</b> hingga mencapai fase dewasa.</p>
             <h3>Gambar Pertumbuhan</h3>
@@ -246,7 +246,8 @@
           
           <div id="detail-strawberry" class="detail-section">
             <h2>🍓 Strawberry</h2>
-            <p>Strawberry adalah buah beri yang manis dan mudah ditanam di pot. Membutuhkan sinar matahari penuh dan penyiraman teratur.</p>
+            <p>Stroberi adalah tanaman buah tahunan yang mudah tumbuh dan akan memberikan panen yang melimpah bagi para petani rumahan selama bertahun-tahun. Tanaman ini tumbuh rendah dan menyebar, dengan daun berwarna hijau tua yang bertekstur dan bergelombang, serta bunga-bunga kecil berwarna putih. Buah stroberi tumbuh dari ujung tunas halus yang tidak berdaun. Meskipun tanaman individu tidak tumbuh dengan sangat cepat, mereka akan menyebar ke samping dengan cepat melalui stolon (pelari).</p>
+              <p>Dalam kondisi yang menguntungkan, setiap tanaman stroberi dapat menghasilkan hingga satu liter stroberi per musim. Stroberi kebun biasanya berbuah dari akhir musim semi hingga awal musim panas.</p>
             <h3>Waktu Tumbuh</h3>
             <p>Strawberry diperkirakan akan tumbuh selama <b>120 hari</b> hingga mencapai fase dewasa.</p>
             <h3>Gambar Pertumbuhan</h3>
@@ -279,7 +280,8 @@
           
           <div id="detail-tomato" class="detail-section">
             <h2>🍅 Tomat</h2>
-            <p>Tomat adalah tanaman sayur yang sangat produktif jika dirawat dengan benar. Suka sinar matahari penuh dan media yang kaya nutrisi.</p>
+            <p> Tomat adalah buah berwarna merah atau kuning yang sering digunakan sebagai sayuran dalam masakan di seluruh dunia. Tanaman ini berasal dari Amerika Selatan dan termasuk dalam keluarga nightshade, sama seperti kentang dan terong.</p>
+            <p>Secara botani, tomat adalah buah beri karena tumbuh dari bakal buah (ovarium) bunga dan mengandung biji di dalamnya. Namun, dalam dunia kuliner, tomat dikategorikan sebagai sayuran karena penggunaannya yang lebih sering dalam hidangan gurih (savoury) daripada hidangan manis.</p>
             <h3>Waktu Tumbuh</h3>
             <p>Tomat diperkirakan akan tumbuh selama <b>100 hari</b> hingga mencapai fase dewasa.</p>
             <h3>Gambar Pertumbuhan</h3>
