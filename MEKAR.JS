@@ -1,15 +1,23 @@
 'use strict';
 
+// =========================================================================
+//                             DATA TANAMAN
+// =========================================================================
 const PLANTS = {
   sunflower: { name: 'Bunga Matahari', waterBase: 3, fertilizerBase: 14, stages: { kecambah: 14, menanam: 7, remaja: 45, dewasa: 80 } },
   rose: { name: 'Mawar', waterBase: 4, fertilizerBase: 10, stages: { kecambah: 30, menanam: 10, remaja: 90, dewasa: 120 } },
-  petunia: { name: 'Petunia', waterBase: 2, fertilizerBase: 10, stages: { kecambah: 7, menanam: 14, remaja: 35, dewasa: 70 } },
-  strawberry: { name: 'Strawberry', waterBase: 3, fertilizerBase: 21, stages: { kecambah: 14, menanam: 30, remaja: 90, dewasa: 120 } },
+  petunia: { name: 'Petunia', waterBase: 2, fertilizerBase: 10, stages: { kecambah: 14, menanam: 7, remaja: 35, dewasa: 70 } },
+  strawberry: { name: 'Strawberry', waterBase: 3, fertilizerBase: 21, stages: { kecambah: 30, menanam: 14, remaja: 90, dewasa: 120 } },
   tomato: { name: 'Tomat', waterBase: 3, fertilizerBase: 14, stages: { kecambah: 7, menanam: 21, remaja: 60, dewasa: 100 } }
 };
 
+// =========================================================================
+//                             FUNGSI NAVIGASI & TAMPILAN
+// =========================================================================
+
 let currentPlant = "sunflower";
 
+// Fungsi untuk menampilkan halaman tertentu dan menyembunyikan yang lain.
 function show(id) {
   document.querySelectorAll('#beranda, #kalkulator, #detail').forEach(s => {
     if (s) s.style.display = 'none';
@@ -20,14 +28,13 @@ function show(id) {
   document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
   const navBtn = document.getElementById('nav-' + id);
   if (navBtn) navBtn.classList.add('active');
-
   if (id === "detail") {
     showDetailContent(currentPlant);
   }
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// Fungsi untuk menampilkan konten detail spesifik untuk satu jenis tanaman.
 function showDetailContent(plantKey) {
   document.querySelectorAll('.detail-section').forEach(section => {
     section.style.display = 'none';
@@ -44,6 +51,7 @@ function showDetailContent(plantKey) {
   }
 }
 
+// Fungsi untuk tema terang/gelap
 function toggleTheme() {
   const body = document.body;
   const cur = body.getAttribute('data-theme') || 'light';
@@ -53,6 +61,11 @@ function toggleTheme() {
   localStorage.setItem('mekar-theme', newTheme);
 }
 
+// =========================================================================
+//                           FUNGSI LOGIKA PERHITUNGAN
+// =========================================================================
+
+// Fungsi untuk menghitung skor cahaya tanaman.
 function lightScore(orientation, distance, obstruction) {
   const baseMap = { south: 1.0, east: 0.85, west: 0.8, north: 0.55 };
   const base = baseMap[orientation] ?? 0.7;
@@ -62,6 +75,7 @@ function lightScore(orientation, distance, obstruction) {
   return Math.round(base * distFactor * obs * 100);
 }
 
+// Fungsi untuk menghitung penyiraman yang direkomendasikan.
 function waterInterval(plantKey, tempC, potCm) {
   const p = PLANTS[plantKey] ?? { waterBase: 3 };
   let interval = p.waterBase;
@@ -70,20 +84,23 @@ function waterInterval(plantKey, tempC, potCm) {
   return Math.max(1, Math.round(interval));
 }
 
+// Fungsi untuk mendapatkan frekuensi pemupukan.
 function fertilizerFreq(plantKey) {
   return PLANTS[plantKey]?.fertilizerBase ?? 14;
 }
 
+// Fungsi untuk memberikan saran media tanam.
 function mediaAdvice(media) {
   const map = {
     mix: 'Media campuran umumnya baik untuk sebagian besar tanaman — drainase dan aerasi seimbang.',
-    peat: 'Media gambut menyimpan air baik untuk tanaman yang suka kelembapan, tambahkan pasir untuk drainase jika perlu.',
+    peat: 'Media gambus menyimpan air baik untuk tanaman yang suka kelembapan, tambahkan pasir untuk drainase jika perlu.',
     sandy: 'Media berpasir cepat menyerap dan mengalirkan air — cocok untuk tanaman yang tidak suka tergenang.',
     clay: 'Tanah liat menahan air lama; gunakan campuran untuk memperbaiki drainase.'
   };
   return map[media] || '';
 }
 
+// Fungsi pembantu untuk membuat elemen KPI (Key Performance Indicator).
 function kpiEl(title, value) {
   const d = document.createElement('div');
   d.className = 'item';
@@ -92,22 +109,31 @@ function kpiEl(title, value) {
   return d;
 }
 
+// =========================================================================
+//                     FUNGSI UTAMA KALKULATOR DAN KALENDER
+// =========================================================================
+
+// Fungsi utama untuk menghitung dan menampilkan semua rekomendasi.
 function hitungRekomendasi() {
+  // 1. Mengambil nilai input dari formulir.
   const distance = parseFloat(document.getElementById('distance').value);
   const pot = parseInt(document.getElementById('pot').value);
   const temp = parseInt(document.getElementById('temp').value);
-
+  
+  // 2. Validasi input. Jika tidak valid, tampilkan peringatan dan keluar.
   if (isNaN(distance) || distance < 0 || isNaN(pot) || pot <= 0 || isNaN(temp)) {
     alert("Mohon masukkan nilai yang valid untuk Jarak, Diameter Pot, dan Suhu.");
     return;
   }
 
+  // 3. Menghitung skor dan interval menggunakan fungsi-fungsi yang telah dibuat.
   const plant = document.getElementById('plant').value;
   currentPlant = plant;
   const orientation = document.getElementById('orientation').value;
   const obstruction = document.getElementById('obstruction').value;
   const media = document.getElementById('media').value;
 
+  // 4. Menampilkan KPI (Skor Cahaya, Interval Siram, Frekuensi Pupuk).
   const ls = lightScore(orientation, distance, obstruction);
   const water = waterInterval(plant, temp, pot);
   const fert = fertilizerFreq(plant);
@@ -141,6 +167,7 @@ function hitungRekomendasi() {
   buatKalender(120, water, estimates);
 }
 
+// Fungsi untuk membuat kalender jadwal perawatan.
 function buatKalender(days, interval, estimates) {
   const cal = document.getElementById('calendar');
   cal.innerHTML = '';
@@ -197,6 +224,11 @@ function buatKalender(days, interval, estimates) {
   }
 }
 
+// =========================================================================
+//                         FUNGSI TAMBAHAN DAN INISIALISASI
+// =========================================================================
+
+// Fungsi untuk mereset semua nilai formulir dan hasil tampilan.
 function resetAll() {
   document.getElementById('plant').value = 'sunflower';
   document.getElementById('phase').value = 'seed';
