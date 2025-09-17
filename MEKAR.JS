@@ -34,7 +34,7 @@ function show(id) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Fungsi untuk menampilkan konten detail spesifik untuk satu jenis tanaman.
+// Fungsi untuk menampilkan detail spesifik untuk satu jenis tanaman.
 function showDetailContent(plantKey) {
   document.querySelectorAll('.detail-section').forEach(section => {
     section.style.display = 'none';
@@ -51,7 +51,7 @@ function showDetailContent(plantKey) {
   }
 }
 
-// Fungsi untuk tema terang/gelap
+// Fungsi untuk light & dark mode
 function toggleTheme() {
   const body = document.body;
   const cur = body.getAttribute('data-theme') || 'light';
@@ -67,7 +67,7 @@ function toggleTheme() {
 
 // Fungsi untuk menghitung skor cahaya tanaman.
 function lightScore(orientation, distance, obstruction) {
-  const baseMap = { south: 1.0, east: 0.85, west: 0.8, north: 0.55 };
+  const baseMap = { selatan: 1.0, timur: 0.85, barat: 0.8, utara: 0.55 };
   const base = baseMap[orientation] ?? 0.7;
   const distFactor = Math.max(0.4, 1 - 0.1 * (Number(distance) || 0));
   const obsMap = { none: 1, sheer: 0.85, block: 0.6 };
@@ -145,6 +145,31 @@ function hitungRekomendasi() {
   kpis.appendChild(kpiEl('Frekuensi Pupuk', `Setiap ${fert} hari`));
   kpis.appendChild(kpiEl('Suhu Ideal', `~ ${Math.max(15, Math.min(30, temp))} °C`));
 
+  // logika untuk suhu ruangan
+  if (temp < 15) {
+    const warningEl = document.createElement('div');
+    warningEl.className = 'kpi-warning';
+    warningEl.innerHTML = `
+      <div class="kpi-item">
+        <h4>❄️ Peringatan Suhu Terlalu Dingin</h4>
+        <p>Suhu ruangan di bawah 15°C tidak ideal untuk pertumbuhan tanaman. Suhu yang terlalu dingin dapat menghambat pertumbuhan.</p>
+      </div>
+    `;
+    document.getElementById('kpis').appendChild(warningEl);
+  }
+
+  if (temp > 27) {
+    const warningEl = document.createElement('div');
+    warningEl.className = 'kpi-warning';
+    warningEl.innerHTML = `
+      <div class="kpi-item">
+        <h4>🔥 Peringatan Suhu Terlalu Panas</h4>
+        <p>Suhu ruangan di atas 27°C tidak ideal untuk pertumbuhan tanaman. Suhu yang terlalu panas dapat menyebabkan stres pada tanaman.</p>
+      </div>
+    `;
+    kpis.appendChild(warningEl);
+  }
+
   const advice = document.getElementById('advice');
   advice.innerHTML = `<p><b>Rekomendasi singkat:</b> Tempatkan di arah ${orientation.toUpperCase()} sekitar ${distance} m dari jendela. ${mediaAdvice(media)}</p>`;
 
@@ -219,7 +244,6 @@ function buatKalender(days, interval, estimates) {
         toggleDone();
       }
     });
-
     cal.appendChild(day);
   }
 }
@@ -228,16 +252,20 @@ function buatKalender(days, interval, estimates) {
 //                         FUNGSI TAMBAHAN DAN INISIALISASI
 // =========================================================================
 
-// Fungsi untuk mereset semua nilai formulir dan hasil tampilan.
+// Fungsi untuk mereset semua nilai formulir.
 function resetAll() {
   document.getElementById('plant').value = 'sunflower';
   document.getElementById('phase').value = 'seed';
-  document.getElementById('orientation').value = 'south';
-  document.getElementById('distance').value = 1;
+  document.getElementById('orientation').value = 'selatan';
   document.getElementById('obstruction').value = 'none';
-  document.getElementById('pot').value = 15;
-  document.getElementById('temp').value = 25;
   document.getElementById('media').value = 'mix';
+
+  // Mengosongkan nilai input numerik
+  document.getElementById('distance').value = '';
+  document.getElementById('pot').value = '';
+  document.getElementById('temp').value = '';
+  
+  // Mengosongkan hasil tampilan
   document.getElementById('kpis').innerHTML = '';
   document.getElementById('advice').innerHTML = '';
   document.getElementById('stages').innerHTML = '';

@@ -16,6 +16,16 @@
   --accent-2: #4fb964;
 }
 
+[data-theme="dark"] select:focus,
+[data-theme="dark"] select:active {
+  border-color: var(--accent);
+}
+
+[data-theme="dark"] option {
+  background-color: var(--card);
+  color: var(--text);
+}
+
 body {
   font-family: Inter, system-ui, Arial, Helvetica, sans-serif;
   background: var(--bg);
@@ -83,7 +93,18 @@ body {
 
 .nav-links button.active {
   color: var(--text);
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--card);
+  border: 1px solid var(--accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links button:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .nav-links button.active {
+  background: var(--card);
+  border-color: var(--accent);
 }
 
 .theme-toggle {
@@ -171,7 +192,6 @@ body {
   }
 }
 
-h1,
 h2 {
   margin: 6px 0;
 }
@@ -183,8 +203,10 @@ p.lead {
 label {
   display: block;
   margin-top: 12px;
+  margin-bottom: 6px;
   font-weight: 600;
   color: var(--muted);
+  width: 100%;
 }
 
 select,
@@ -193,10 +215,20 @@ input[type=text],
 textarea {
   width: 100%;
   padding: 10px;
-  margin-top: 6px;
+  margin-top: 0;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   background: transparent;
+  color: var(--text);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] select,
+[data-theme="dark"] input[type=number],
+[data-theme="dark"] input[type=text],
+[data-theme="dark"] textarea {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--card);
   color: var(--text);
 }
 
@@ -213,7 +245,24 @@ textarea {
 .btn.ghost {
   background: transparent;
   color: var(--accent);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--accent);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn.ghost:hover {
+  background-color: rgba(46, 125, 50, 0.1);
+}
+
+.btn.ghost:active {
+  transform: translateY(1px);
+}
+
+[data-theme="dark"] .btn.ghost {
+  border: 1px solid var(--accent);
+}
+
+[data-theme="dark"] .btn.ghost:hover {
+  background-color: rgba(122, 208, 138, 0.15);
 }
 
 .plant-card {
@@ -248,6 +297,27 @@ textarea {
   min-width: 140px;
 }
 
+.kpi-warning {
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #ffe0b2;
+  color: #e65100;
+  border: 1px solid #ff9800;
+  margin-top: 10px;
+}
+
+[data-theme="dark"] .kpi-warning {
+  background-color: #422a00;
+  color: #ffb74d;
+  border-color: #ffb74d;
+}
+
+.kpi-warning h4 {
+  margin: 0;
+  font-size: 1em;
+  font-weight: 700;
+}
+
 .advice-text {
   margin-top: 10px;
   color: var(--muted);
@@ -271,7 +341,17 @@ textarea {
 .stage-pill {
   padding: 8px 10px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(46, 125, 50, 0.1);
+  color: var(--accent);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+[data-theme="dark"] .stage-pill {
+  background: rgba(122, 208, 138, 0.15);
+  color: var(--accent);
 }
 
 .calendar {

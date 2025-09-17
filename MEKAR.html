@@ -58,54 +58,70 @@
       <h2>Kalkulator Perawatan & Perkiraan Waktu Pertumbuhan</h2>
       <div class="grid-2">
         <div>
-          <label for="plant">Pilih Tanaman</label>
-          <select id="plant">
-            <option value="sunflower">Bunga Matahari</option>
-            <option value="rose">Mawar</option>
-            <option value="petunia">Petunia</option>
-            <option value="strawberry">Strawberry</option>
-            <option value="tomato">Tomat</option>
-          </select>
+          <div class="form-group">
+            <label for="plant">Pilih Tanaman</label>
+            <select id="plant">
+              <option value="sunflower">Bunga Matahari</option>
+              <option value="rose">Mawar</option>
+              <option value="petunia">Petunia</option>
+              <option value="strawberry">Strawberry</option>
+              <option value="tomato">Tomat</option>
+            </select>
+          </div>
 
-          <label for="phase">Tahap Saat Ini</label>
-          <select id="phase">
-            <option value="seed">Benih</option>
-            <option value="seedling">Kecambah</option>
-            <option value="vegetative">Remaja</option>
-            <option value="flowering">Berbunga (Dewasa)</option>
-          </select>
+          <div class="form-group">
+            <label for="phase">Tahap Saat Ini</label>
+            <select id="phase">
+              <option value="seed">Benih</option>
+              <option value="seedling">Kecambah</option>
+              <option value="vegetative">Remaja</option>
+              <option value="flowering">Berbunga (Dewasa)</option>
+            </select>
+          </div>
 
-          <label for="orientation">Arah Jendela / Sumber Cahaya</label>
-          <select id="orientation">
-            <option value="south">Selatan (paling terang)</option>
-            <option value="east">Timur</option>
-            <option value="west">Barat</option>
-            <option value="north">Utara (paling redup)</option>
-          </select>
+          <div class="form-group">
+            <label for="orientation">Arah Jendela / Sumber Cahaya</label>
+            <select id="orientation">
+              <option value="selatan">Selatan (paling terang)</option>
+              <option value="timur">Timur</option>
+              <option value="barat">Barat</option>
+              <option value="utara">Utara (paling redup)</option>
+            </select>
+          </div>
 
-          <label for="distance">Jarak dari Jendela (meter)</label>
-          <input id="distance" type="number" min="0" step="0.1" value="1">
+          <div class="form-group">
+            <label for="distance">Jarak dari Jendela (meter)</label>
+            <input id="distance" type="number" min="0" step="0.1" placeholder="Contohnya 1">
+          </div>
 
-          <label for="obstruction">Halangan Cahaya</label>
-          <select id="obstruction">
-            <option value="none">Tidak ada</option>
-            <option value="sheer">Kaca tipis / tirai tipis</option>
-            <option value="block">Halangan / tembok</option>
-          </select>
+          <div class="form-group">
+            <label for="obstruction">Halangan Cahaya</label>
+            <select id="obstruction">
+              <option value="none">Tidak ada</option>
+              <option value="sheer">Kaca tipis / tirai tipis</option>
+              <option value="block">Halangan / tembok</option>
+            </select>
+          </div>
 
-          <label for="pot">Diameter Pot (cm)</label>
-          <input id="pot" type="number" placeholder="Contohnya 15">
+          <div class="form-group">
+            <label for="pot">Diameter Pot (cm)</label>
+            <input id="pot" type="number" placeholder="Contohnya 15">
+          </div>
 
-          <label for="temp">Suhu Ruangan (°C)</label>
-          <input id="temp" type="number" placeholder="Contohnya 25">
+          <div class="form-group">
+            <label for="temp">Suhu Ruangan (°C)</label>
+            <input id="temp" type="number" placeholder="Contohnya 25">
+          </div>
 
-          <label for="media">Media Tanam (opsional)</label>
-          <select id="media">
-            <option value="mix">Campuran (kompos + tanah + pasir)</option>
-            <option value="peat">Tanah gambut / potting mix</option>
-            <option value="sandy">Tanah berpasir</option>
-            <option value="clay">Tanah liat</option>
-          </select>
+          <div class="form-group">
+            <label for="media">Media Tanam (opsional)</label>
+            <select id="media">
+              <option value="mix">Campuran (kompos + tanah + pasir)</option>
+              <option value="peat">Tanah gambut / potting mix</option>
+              <option value="sandy">Tanah berpasir</option>
+              <option value="clay">Tanah liat</option>
+            </select>
+          </div>
 
           <div class="flex-gap">
             <button class="btn" onclick="hitungRekomendasi()">Hitung & Tampilkan Rekomendasi</button>
